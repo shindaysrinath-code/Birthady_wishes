@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Sharon 🎉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.2/confetti.browser.min.js"></script>
+<style>
+  :root{
+    --bg-deep:#050507;
+    --bg-card:#0c0c12;
+    --pink:#FF2E9A;
+    --cyan:#00F0FF;
+    --violet:#B026FF;
+    --lime:#D4FF3F;
+    --cream:#F5F5FA;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,46,154,0.20), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(0,240,255,0.16), transparent 45%),
+      radial-gradient(circle at 60% 90%, rgba(176,38,255,0.20), transparent 50%),
+      var(--bg-deep);
+    font-family:'Poppins', sans-serif;
+    color:var(--cream);
+    overflow-x:hidden;
+  }
+
+  .stage-wrap{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+
+  .balloon{
+    position:fixed;
+    bottom:-140px;
+    width:46px;
+    height:58px;
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    opacity:0.9;
+    animation:float 14s linear infinite;
+    z-index:0;
+  }
+  .balloon::after{
+    content:"";
+    position:absolute;
+    bottom:-22px;
+    left:50%;
+    width:1px;
+    height:24px;
+    background:rgba(245,245,250,0.25);
+  }
+  .balloon.b1{ left:8%;  background:var(--pink);   box-shadow:0 0 22px var(--pink);   animation-delay:0s;  animation-duration:16s;}
+  .balloon.b2{ left:22%; background:var(--lime);   box-shadow:0 0 22px var(--lime);   animation-delay:3s;  animation-duration:13s;}
+  .balloon.b3{ left:70%; background:var(--cyan);   box-shadow:0 0 22px var(--cyan);   animation-delay:1.5s;animation-duration:15s;}
+  .balloon.b4{ left:85%; background:var(--violet); box-shadow:0 0 22px var(--violet); animation-delay:5s;  animation-duration:18s;}
+  .balloon.b5{ left:45%; background:var(--pink);   box-shadow:0 0 22px var(--pink);   animation-delay:7s;  animation-duration:12s;}
+
+  @keyframes float{
+    0%{ transform:translateY(0) rotate(-4deg); }
+    50%{ transform:translateY(-55vh) rotate(4deg); }
+    100%{ transform:translateY(-115vh) rotate(-4deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .balloon{ animation:none; opacity:0.3; bottom:10%; }
+  }
+
+  .card{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:460px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(8px);
+    border-radius:28px;
+    padding:48px 32px;
+    text-align:center;
+    box-shadow:
+      0 0 0 1px rgba(255,46,154,0.15),
+      0 0 40px rgba(176,38,255,0.18),
+      0 30px 60px rgba(0,0,0,0.6);
+  }
+
+  .screen{ display:none; }
+  .screen.active{ display:block; animation:riseIn .5s ease; }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .eyebrow{
+    font-family:'Poppins',sans-serif;
+    font-size:14px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--cyan);
+    text-shadow:0 0 12px rgba(0,240,255,0.6);
+    margin:0 0 18px;
+  }
+
+  h1, h2{
+    font-family:'Baloo 2', cursive;
+    margin:0 0 12px;
+    line-height:1.15;
+  }
+
+  #screen-start h1{
+    font-size:20px;
+    color:rgba(245,245,250,0.7);
+    font-weight:500;
+    font-family:'Poppins',sans-serif;
+    margin-bottom:28px;
+  }
+
+  .wish-text{
+    font-size:44px;
+    font-weight:800;
+    background:linear-gradient(90deg, var(--pink), var(--violet) 50%, var(--cyan));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    filter:drop-shadow(0 0 18px rgba(176,38,255,0.45));
+  }
+  .wish-text span{ display:block; font-size:52px; }
+
+  .wish-sub{
+    font-size:16px;
+    color:rgba(245,245,250,0.7);
+    margin-bottom:32px;
+    line-height:1.6;
+  }
+
+  #screen-question h2{
+    font-size:26px;
+    color:var(--lime);
+    text-shadow:0 0 14px rgba(212,255,63,0.5);
+  }
+  #screen-question p{
+    font-size:16px;
+    color:rgba(245,245,250,0.75);
+    margin-bottom:36px;
+  }
+
+  .btn{
+    font-family:'Baloo 2', cursive;
+    font-size:18px;
+    font-weight:700;
+    padding:14px 34px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:focus-visible{
+    outline:3px solid var(--cyan);
+    outline-offset:3px;
+  }
+  .btn:active{ transform:scale(0.96); }
+
+  .btn-primary{
+    background:linear-gradient(90deg, var(--pink), var(--violet));
+    color:var(--cream);
+    box-shadow:0 0 18px rgba(255,46,154,0.55), 0 0 40px rgba(176,38,255,0.3);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 0 26px rgba(255,46,154,0.75), 0 0 55px rgba(176,38,255,0.45); }
+
+  .btn-secondary{
+    background:transparent;
+    border:2px solid var(--cyan);
+    color:var(--cyan);
+    box-shadow:0 0 16px rgba(0,240,255,0.35);
+  }
+  .btn-secondary:hover{ transform:translateY(-2px); box-shadow:0 0 26px rgba(0,240,255,0.55); }
+
+  .btn-outline{
+    background:transparent;
+    border:2px solid rgba(245,245,250,0.35);
+    color:var(--cream);
+  }
+
+  .qa-field{
+    position:relative;
+    height:130px;
+    margin-top:8px;
+  }
+  .btn-row{
+    position:relative;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+  }
+  #no-btn{
+    position:absolute;
+  }
+
+  #screen-final h2{
+    font-size:30px;
+    color:var(--cyan);
+    text-shadow:0 0 16px rgba(0,240,255,0.5);
+  }
+  #screen-final p{
+    font-size:17px;
+    color:rgba(245,245,250,0.75);
+    margin:0 0 8px;
+    line-height:1.6;
+  }
+  #screen-final .small{
+    font-size:14px;
+    color:rgba(245,245,250,0.45);
+    margin-top:18px;
+  }
+
+  @media (max-width:400px){
+    .wish-text{ font-size:34px; }
+    .wish-text span{ font-size:42px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="balloon b1"></div>
+<div class="balloon b2"></div>
+<div class="balloon b3"></div>
+<div class="balloon b4"></div>
+<div class="balloon b5"></div>
+
+<div class="stage-wrap">
+  <div class="card">
+
+    <section id="screen-start" class="screen active">
+      <h1>Hey Sharon, I made you something...</h1>
+      <button id="blast-btn" class="btn btn-primary">Let's Blast 🎉</button>
+    </section>
+
+    <section id="screen-wish" class="screen">
+      <p class="eyebrow">To the best friend ever</p>
+      <h1 class="wish-text">Happy Birthday<span>Sharon! 🎂</span></h1>
+      <p class="wish-sub">Wishing you a day as fun and full of surprises as you are. Hope this year brings you all the good stuff!</p>
+      <button id="next-btn" class="btn btn-secondary">Okay but wait...</button>
+    </section>
+
+    <section id="screen-question" class="screen">
+      <h2>One tiny question 👀</h2>
+      <p>Are you inviting me to your birthday party tonight?</p>
+      <div class="qa-field">
+        <div class="btn-row" id="btn-row">
+          <button id="yes-btn" class="btn btn-primary">Yes</button>
+          <button id="no-btn" class="btn btn-outline">No</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-final" class="screen">
+      <h2>Aww, yay!! 🥳</h2>
+      <p>...jk. Sorry, I'm busy tonight, can't make it 😅🎈</p>
+      <p class="small">(kidding — happy birthday, love you loads 💖)</p>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  function switchScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function burstConfetti(originY){
+    if(typeof confetti !== 'function') return;
+    var colors = ['#FF2E9A', '#00F0FF', '#B026FF', '#D4FF3F', '#F5F5FA'];
+    confetti({
+      particleCount: 120,
+      spread: 90,
+      startVelocity: 45,
+      origin: { y: originY || 0.6 },
+      colors: colors
+    });
+    setTimeout(function(){
+      confetti({
+        particleCount: 60,
+        angle: 60,
+        spread: 70,
+        origin: { x: 0, y: originY || 0.6 },
+        colors: colors
+      });
+      confetti({
+        particleCount: 60,
+        angle: 120,
+        spread: 70,
+        origin: { x: 1, y: originY || 0.6 },
+        colors: colors
+      });
+    }, 250);
+  }
+
+  document.getElementById('blast-btn').addEventListener('click', function(){
+    burstConfetti(0.6);
+    setTimeout(function(){ switchScreen('screen-wish'); }, 900);
+  });
+
+  document.getElementById('next-btn').addEventListener('click', function(){
+    switchScreen('screen-question');
+  });
+
+  document.getElementById('yes-btn').addEventListener('click', function(){
+    burstConfetti(0.4);
+    setTimeout(function(){ switchScreen('screen-final'); }, 500);
+  });
+
+  // The "No" button dodges instead of ever being pressable
+  var noBtn = document.getElementById('no-btn');
+  var field = document.getElementById('btn-row');
+
+  function dodge(){
+    var fieldRect = field.getBoundingClientRect();
+    var btnRect = noBtn.getBoundingClientRect();
+    var maxX = Math.max(fieldRect.width - btnRect.width, 0);
+    var maxY = Math.max(fieldRect.height - btnRect.height, 0);
+    var newX = Math.random() * maxX;
+    var newY = Math.random() * maxY;
+    noBtn.style.left = newX + 'px';
+    noBtn.style.top = newY + 'px';
+  }
+
+  noBtn.addEventListener('mouseenter', dodge);
+  noBtn.addEventListener('pointerdown', function(e){ e.preventDefault(); dodge(); });
+  noBtn.addEventListener('touchstart', function(e){ e.preventDefault(); dodge(); }, { passive:false });
+  noBtn.addEventListener('focus', dodge);
+  noBtn.addEventListener('click', function(e){ e.preventDefault(); dodge(); });
+</script>
+
+</body>
+</html>
